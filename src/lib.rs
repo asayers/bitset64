@@ -189,43 +189,47 @@ impl ::std::fmt::Display for BitSet64 {
     }
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn test_bitset64() {
-    let set = BitSet64::empty_set()
-        .insert(2)
-        .insert(5)
-        .insert(6)
-        .insert(8);
-    assert_eq!(set.min(), Some(2));
-    assert_eq!(set.max(), Some(8));
-    assert_eq!(format!("{}", set), "101100100");
-    println!("> {:>10}", set);
-    for i in set.subsets() {
-        println!("# {:>10}", i);
+    #[test]
+    fn test_bitset64() {
+        let set = BitSet64::empty_set()
+            .insert(2)
+            .insert(5)
+            .insert(6)
+            .insert(8);
+        assert_eq!(set.min(), Some(2));
+        assert_eq!(set.max(), Some(8));
+        assert_eq!(format!("{}", set), "101100100");
+        println!("> {:>10}", set);
+        for i in set.subsets() {
+            println!("# {:>10}", i);
+        }
+        println!("> {:>10}", set);
+        for i in set.elements() {
+            println!("# {}", i);
+        }
     }
-    println!("> {:>10}", set);
-    for i in set.elements() {
-        println!("# {}", i);
-    }
-}
 
-#[test]
-fn test_bitset64_empty() {
-    let set = BitSet64::empty_set();
-    println!("{:?} {:?}", set.min(), set.max());
-    println!("> {}", set);
-    for i in set.subsets() {
-        println!("# {}", i);
+    #[test]
+    fn test_bitset64_empty() {
+        let set = BitSet64::empty_set();
+        println!("{:?} {:?}", set.min(), set.max());
+        println!("> {}", set);
+        for i in set.subsets() {
+            println!("# {}", i);
+        }
     }
-}
 
-#[test]
-fn test_bitset64_full() {
-    let set = BitSet64::full_set(3);
-    println!("{:?} {:?}", set.min(), set.max());
-    println!("> {}", set);
-    for i in set.subsets() {
-        println!("# {}", i);
+    #[test]
+    fn test_bitset64_full() {
+        let set = BitSet64::full_set(3);
+        println!("{:?} {:?}", set.min(), set.max());
+        println!("> {}", set);
+        for i in set.subsets() {
+            println!("# {}", i);
+        }
     }
 }
