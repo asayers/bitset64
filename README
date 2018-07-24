@@ -1,0 +1,8 @@
+A simple bitset stored in a single u64.
+
+The downside of such a basic representation is, of course, that sets can only
+store the numbers 0..64.  The major upside is that it's very compact and most
+operations are fast.  The fact that it's `Copy` is also convenient.
+
+If need to store elements from 0..64 in a set, `BitSet64` is probably the best
+way to do it.
