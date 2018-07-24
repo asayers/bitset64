@@ -21,7 +21,8 @@ impl BitSet64 {
     #[inline]
     pub fn full_set(n: u64) -> BitSet64 {
         assert!(n < 64);
-        BitSet64((1u64 << n) - 1)  // (2 ** n) - 1
+        // (2 ** n) - 1
+        BitSet64((1u64 << n) - 1)
     }
     /// Only the nth bit is set.  (1 instruction)
     #[inline]
@@ -69,14 +70,18 @@ impl BitSet64 {
     /// The smallest idx of a set bit.
     #[inline]
     pub fn min(&self) -> Option<u64> {
-        if self.0 == 0 { None } else {
+        if self.0 == 0 {
+            None
+        } else {
             Some(self.0.trailing_zeros() as u64)
         }
     }
     /// The largest idx of a set bit.
     #[inline]
     pub fn max(&self) -> Option<u64> {
-        if self.0 == 0 { None } else {
+        if self.0 == 0 {
+            None
+        } else {
             Some(Self::MAX_IDX - self.0.leading_zeros() as u64)
         }
     }
@@ -85,7 +90,10 @@ impl BitSet64 {
     pub fn take_max(&mut self) -> Option<u64> {
         match self.max() {
             None => None,
-            Some(max) => { *self = self.remove(max); Some(max) }
+            Some(max) => {
+                *self = self.remove(max);
+                Some(max)
+            }
         }
     }
 
@@ -138,8 +146,12 @@ impl Iterator for Elements {
     type Item = u64;
     #[inline]
     fn next(&mut self) -> Option<u64> {
-        if self.done { return None; }
-        if self.cur == self.max { self.done = true; }
+        if self.done {
+            return None;
+        }
+        if self.cur == self.max {
+            self.done = true;
+        }
         let ret = self.cur;
         let cur_lower_bits = BitSet64::full_set(self.cur + 1);
         let next_lower_bits = !self.set.0 | cur_lower_bits.0;
@@ -158,8 +170,12 @@ impl Iterator for Subsets {
     type Item = BitSet64;
     #[inline]
     fn next(&mut self) -> Option<BitSet64> {
-        if self.done { return None; }
-        if self.cur.0 == self.set.0 { self.done = true; }
+        if self.done {
+            return None;
+        }
+        if self.cur.0 == self.set.0 {
+            self.done = true;
+        }
         let ret = self.cur;
         self.cur = BitSet64(self.set.0 & (self.cur.0.wrapping_sub(self.set.0)));
         Some(ret)
