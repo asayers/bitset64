@@ -3,5 +3,6 @@ name = "bitset64"
 version = "0.1.0"
 authors = ["Alex Sayers <alex.sayers@gmail.com>"]
 description = "A bitset stored in a single u64"
+license = "unlicense"
 
 [dependencies]
